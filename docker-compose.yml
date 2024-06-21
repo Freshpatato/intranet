@@ -14,7 +14,7 @@ services:
       - LDAP_SEARCH_BASE=DC=home,DC=local
   frontend:
     build:
-      context: ./
+      context: .
       dockerfile: Dockerfile
     ports:
       - "3000:80"
