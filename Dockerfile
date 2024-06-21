@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Construire l'application pour la production
-RUN NODE_OPTIONS=--openssl-legacy-provider npm run build
+RUN npm run build
 
 # Étape 2: Production stage
 FROM nginx:alpine
