@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'REEF BOLD';
+  src: url('./assets/fonts/REEF-BOLD.woff2') format('woff2'),
+       url('./assets/fonts/REEF-BOLD.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: 'REEF BOLD', Arial, sans-serif;
+  background-color: #f5f5f5;
+}
