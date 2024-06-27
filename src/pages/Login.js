@@ -1,55 +1,80 @@
 import React, { useState } from 'react';
-import { TextField, Button, Box, Typography, Container } from '@mui/material';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { AppBar, Toolbar, Typography, Button, IconButton, Avatar, TextField, Container, Box } from '@mui/material';
 import { useUserContext } from '../context/UserContext';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useUserContext();
+  const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { setCurrentUser } = useUserContext();
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     try {
-      await login(username, password);
+      const response = await axios.post('http://localhost:5000/api/login', { username, password });
+      setCurrentUser({ name: response.data.username, roles: response.data.roles || [] }); // Assuming the server sends back user data including roles
       navigate('/');
     } catch (error) {
-      alert('Nom d\'utilisateur ou mot de passe incorrect');
-    }
-  };
-
-  const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      handleLogin();
+      setError('Invalid credentials');
+      console.error('Failed to login', error);
     }
   };
 
   return (
-    <Container maxWidth="xs" style={{ marginTop: '100px' }}>
-      <Box display="flex" flexDirection="column" alignItems="center">
-        <Typography variant="h5" gutterBottom>
-          Connexion
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Login
         </Typography>
-        <TextField
-          label="Nom d'utilisateur"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          onKeyPress={handleKeyPress}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="Mot de passe"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          onKeyPress={handleKeyPress}
-          fullWidth
-          margin="normal"
-        />
-        <Button variant="contained" color="primary" onClick={handleLogin}>
-          Connexion
-        </Button>
+        <Box component="form" onSubmit={handleLogin} sx={{ mt: 1 }}>
+          {error && <Typography color="error">{error}</Typography>}
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
+            autoFocus
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Login
+          </Button>
+        </Box>
       </Box>
     </Container>
   );

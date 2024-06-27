@@ -11,7 +11,7 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
 const Sidebar = ({ isAdmin }) => {
   return (
-    <div style={{ width: 250, backgroundColor: '#f0f0f0', height: '100vh' }}>
+    <div style={{ width: 250, backgroundColor: '#f0f0f0', height: '100vh', position: 'relative' }}>
       <List>
         <ListItem button component={Link} to="/">
           <ListItemIcon><HomeIcon /></ListItemIcon>
@@ -19,15 +19,15 @@ const Sidebar = ({ isAdmin }) => {
         </ListItem>
         <ListItem button component={Link} to="/students">
           <ListItemIcon><PersonIcon /></ListItemIcon>
-          <ListItemText primary="Students" />
+          <ListItemText primary="Etudiants" />
         </ListItem>
         <ListItem button component={Link} to="/teachers">
           <ListItemIcon><SchoolIcon /></ListItemIcon>
-          <ListItemText primary="Teachers" />
+          <ListItemText primary="Enseignents" />
         </ListItem>
         <ListItem button component={Link} to="/events">
           <ListItemIcon><EventIcon /></ListItemIcon>
-          <ListItemText primary="Events" />
+          <ListItemText primary="Evenements" />
         </ListItem>
         <ListItem button component={Link} to="/resources">
           <ListItemIcon><AssignmentIcon /></ListItemIcon>

@@ -19,7 +19,7 @@ const Header = () => {
         <Typography variant="h6" style={{ flexGrow: 1 }}>
           Intranet École Primaire
         </Typography>
-        {currentUser && (
+        {currentUser && currentUser.name && (
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <Avatar>{currentUser.name.charAt(0)}</Avatar>
             <Typography variant="body1" style={{ marginLeft: 10, marginRight: 20 }}>

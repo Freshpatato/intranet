@@ -5,7 +5,11 @@ import { useUserContext } from '../context/UserContext';
 const ProtectedRoute = ({ component: Component }) => {
   const { currentUser } = useUserContext();
 
-  return currentUser ? <Component /> : <Navigate to="/login" />;
+  if (!currentUser) {
+    return <Navigate to="/login" />;
+  }
+
+  return <Component />;
 };
 
 export default ProtectedRoute;

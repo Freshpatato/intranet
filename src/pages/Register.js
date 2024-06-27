@@ -1,63 +1,41 @@
 import React, { useState } from 'react';
-import { TextField, Button, Box, Typography, Container } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import { useUserContext } from '../context/UserContext';
+import axios from 'axios';
 
 const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('student');
-  const { register } = useUserContext();
-  const navigate = useNavigate();
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
-  const handleRegister = async () => {
+  const handleRegister = async (e) => {
+    e.preventDefault();
     try {
-      await register(username, password, role);
-      navigate('/login');
+      await axios.post('http://localhost:5000/api/register', { username, password });
+      setSuccess('User created successfully');
+      setError('');
     } catch (error) {
-      alert('Erreur lors de l\'inscription');
+      setError('Error creating user');
+      setSuccess('');
     }
   };
 
   return (
-    <Container maxWidth="xs" style={{ marginTop: '100px' }}>
-      <Box display="flex" flexDirection="column" alignItems="center">
-        <Typography variant="h5" gutterBottom>
-          Inscription
-        </Typography>
-        <TextField
-          label="Nom d'utilisateur"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="Mot de passe"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="Rôle"
-          select
-          SelectProps={{ native: true }}
-          value={role}
-          onChange={(e) => setRole(e.target.value)}
-          fullWidth
-          margin="normal"
-        >
-          <option value="student">Élève</option>
-          <option value="teacher">Professeur</option>
-          <option value="admin">Administrateur</option>
-        </TextField>
-        <Button variant="contained" color="primary" onClick={handleRegister}>
-          S'inscrire
-        </Button>
-      </Box>
-    </Container>
+    <div>
+      <h1>Register</h1>
+      {error && <p>{error}</p>}
+      {success && <p>{success}</p>}
+      <form onSubmit={handleRegister}>
+        <div>
+          <label>Username</label>
+          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+        </div>
+        <div>
+          <label>Password</label>
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        </div>
+        <button type="submit">Register</button>
+      </form>
+    </div>
   );
 };
 

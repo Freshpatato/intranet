@@ -12,14 +12,19 @@ import AdminDashboard from './pages/AdminDashboard';
 import Login from './pages/Login';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
+import Footer from './components/Footer';
+import Register from './pages/Register';
 import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
 
 const AppContent = () => {
   const { currentUser } = useUserContext();
+
   return (
     <div style={{ display: 'flex' }}>
-      {currentUser && <Sidebar isAdmin={currentUser.roles.includes('admin')} />}
+      {currentUser && (
+        <Sidebar isAdmin={currentUser.roles && currentUser.roles.includes('admin')} />
+      )}
       <div style={{ flex: 1 }}>
         <Header />
         <Routes>
@@ -32,7 +37,9 @@ const AppContent = () => {
           <Route path="/assignments" element={<ProtectedRoute component={Assignments} />} />
           <Route path="/forum" element={<ProtectedRoute component={Forum} />} />
           <Route path="/admin" element={<ProtectedRoute component={AdminDashboard} />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
+        <Footer />
       </div>
     </div>
   );

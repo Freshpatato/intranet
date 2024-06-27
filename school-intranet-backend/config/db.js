@@ -1,13 +1,7 @@
-const mongoose = require('mongoose');
+// school-intranet-backend/config/db.js
+const { Sequelize } = require('sequelize');
+const config = require('./config.json');
 
-const connectDB = async () => {
-  try {
-    await mongoose.connect('mongodb://localhost:27017/school-intranet');
-    console.log('MongoDB connected');
-  } catch (err) {
-    console.error(err.message);
-    process.exit(1);
-  }
-};
+const sequelize = new Sequelize(config.development);
 
-module.exports = connectDB;
+module.exports = sequelize;

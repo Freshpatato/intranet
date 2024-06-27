@@ -7,13 +7,17 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "express": "^4.17.1",
-    "express-session": "^1.17.1",
-    "passport": "^0.4.1",
-    "passport-ldapauth": "^2.0.0",
+    "bcrypt": "^5.1.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
-    "ldapjs": "^2.3.3"
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "ldapjs": "^2.3.3",
+    "passport": "^0.4.1",
+    "passport-ldapauth": "^2.0.0",
+    "sequelize": "^6.37.3",
+    "sequelize-cli": "^6.6.2",
+    "sqlite3": "^5.1.7"
   },
   "author": "",
   "license": "ISC"
