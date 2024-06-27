@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useUserContext } from '../context/UserContext';
+
 import { List, ListItem, ListItemText, Typography } from '@mui/material';
 import axios from 'axios';
 
 const Students = () => {
-  const { currentUser } = useUserContext();
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
@@ -19,10 +18,6 @@ const Students = () => {
     };
     fetchStudents();
   }, []);
-
-  if (!currentUser || !currentUser.roles.includes('admin')) {
-    return <Typography variant="h6">Accès refusé</Typography>;
-  }
 
   return (
     <div>

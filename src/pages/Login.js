@@ -1,27 +1,27 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Button, IconButton, Avatar, TextField, Container, Box } from '@mui/material';
+import { Box, Button, Typography, Container, TextField } from '@mui/material';
 import { useUserContext } from '../context/UserContext';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
   const navigate = useNavigate();
   const { setCurrentUser } = useUserContext();
 
-  const handleLogin = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:5000/api/login', { username, password });
-      setCurrentUser({ name: response.data.username, roles: response.data.roles || [] }); // Assuming the server sends back user data including roles
-      navigate('/');
-    } catch (error) {
-      setError('Invalid credentials');
-      console.error('Failed to login', error);
-    }
+    axios.post('/api/ldap/login', { username, password })
+      .then(response => {
+        setMessage(response.data.message);
+        setCurrentUser({ name: username, roles: response.data.roles || [] });
+        navigate('/');
+      })
+      .catch(error => {
+        setMessage(error.response ? error.response.data.message : 'Authentication failed');
+      });
   };
 
   return (
@@ -34,14 +34,10 @@ const Login = () => {
           alignItems: 'center',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
-        </Avatar>
         <Typography component="h1" variant="h5">
           Login
         </Typography>
-        <Box component="form" onSubmit={handleLogin} sx={{ mt: 1 }}>
-          {error && <Typography color="error">{error}</Typography>}
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             required
@@ -74,6 +70,11 @@ const Login = () => {
           >
             Login
           </Button>
+          {message && (
+            <Typography variant="body2" color="error">
+              {message}
+            </Typography>
+          )}
         </Box>
       </Box>
     </Container>

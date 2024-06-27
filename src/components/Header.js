@@ -2,12 +2,15 @@ import React from 'react';
 import { AppBar, Toolbar, Typography, Button, IconButton, Avatar } from '@mui/material';
 import { useUserContext } from '../context/UserContext';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const { currentUser, logout } = useUserContext();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
+    navigate('/login');
   };
 
   return (
@@ -25,7 +28,14 @@ const Header = () => {
             <Typography variant="body1" style={{ marginLeft: 10, marginRight: 20 }}>
               {currentUser.name}
             </Typography>
-            <Button color="inherit" onClick={handleLogout} startIcon={<LogoutIcon />}>
+            <Typography variant="body2" style={{ marginRight: 20 }}>
+              {currentUser.roles.join(', ')}
+            </Typography>
+            <Button
+              color="inherit"
+              onClick={handleLogout}
+              startIcon={<LogoutIcon />}
+            >
               Déconnexion
             </Button>
           </div>

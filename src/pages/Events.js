@@ -1,28 +1,12 @@
-import React, { useEffect } from 'react';
-import { useEventContext } from '../context/EventContext';
-import { List, ListItem, ListItemText, Typography } from '@mui/material';
+import React from 'react';
 
-const Events = () => {
-  const { events, fetchEvents } = useEventContext();
-
-  useEffect(() => {
-    fetchEvents();
-  }, [fetchEvents]);
-
+const Dashboard = () => {
   return (
     <div>
-      <Typography variant="h4" gutterBottom>Événements à venir</Typography>
-      <List>
-        {events.length > 0 ? events.map(event => (
-          <ListItem key={event.id}>
-            <ListItemText primary={event.title} secondary={event.date} />
-          </ListItem>
-        )) : (
-          <Typography variant="body1">Aucun événement à venir.</Typography>
-        )}
-      </List>
+      <h1>Events</h1>
+      <p>Events</p>
     </div>
   );
 };
 
-export default Events;
+export default Dashboard;

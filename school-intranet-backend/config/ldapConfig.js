@@ -1,10 +1,8 @@
+// config/ldapConfig.js
 module.exports = {
-  server: {
-    url: process.env.LDAP_URL
-  },
-  bindDn: process.env.LDAP_BIND_DN,
-  bindCredentials: process.env.LDAP_BIND_PASSWORD,
-  searchBase: process.env.LDAP_SEARCH_BASE,
-  searchFilter: '(sAMAccountName={{username}})',
-  userAttributes: ['cn', 'mail', 'memberOf'],
+  url: 'ldap://172.20.50.50:389',
+  bindDN: 'Administrateur@home.local',
+  bindCredentials: 'Bmw1999', // Remplacez par le mot de passe correct
+  searchBase: 'DC=home,DC=local',
+  searchFilter: '(sAMAccountName={{username}})'
 };

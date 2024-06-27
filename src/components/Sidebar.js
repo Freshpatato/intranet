@@ -8,6 +8,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import ForumIcon from '@mui/icons-material/Forum';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import ScheduleIcon from '@mui/icons-material/Schedule';
 
 const Sidebar = ({ isAdmin }) => {
   return (
@@ -37,11 +38,21 @@ const Sidebar = ({ isAdmin }) => {
           <ListItemIcon><ForumIcon /></ListItemIcon>
           <ListItemText primary="Forum" />
         </ListItem>
+        <ListItem button component={Link} to="/schedule">
+          <ListItemIcon><ScheduleIcon /></ListItemIcon>
+          <ListItemText primary="Emploi du Temps" />
+        </ListItem>
         {isAdmin && (
-          <ListItem button component={Link} to="/admin">
-            <ListItemIcon><AdminPanelSettingsIcon /></ListItemIcon>
-            <ListItemText primary="Admin Dashboard" />
-          </ListItem>
+          <>
+            <ListItem button component={Link} to="/admin">
+              <ListItemIcon><AdminPanelSettingsIcon /></ListItemIcon>
+              <ListItemText primary="Admin Dashboard" />
+            </ListItem>
+            <ListItem button component={Link} to="/admin-schedule">
+              <ListItemIcon><ScheduleIcon /></ListItemIcon>
+              <ListItemText primary="Gérer l'Emploi du Temps" />
+            </ListItem>
+          </>
         )}
       </List>
     </div>
